@@ -1,10 +1,8 @@
 package example.hello;
 
 import java.rmi.Naming;
-import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
+import java.rmi.registry.Registry;
 
 public class Server {
 
@@ -12,16 +10,19 @@ public class Server {
 
     public static void main(String args[]) {
         try {
+            // Cria o registry na porta padrão (1099)
             LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
-            Registry registry = LocateRegistry.getRegistry("localhost");
-            
-            HelloImplem obj = new HelloImplem(5678);
-            //Hello stub = (Hello) UnicastRemoteObject.exportObject(obj, 5678);
 
-            // Bind the remote object's stub in the registry
-            Naming.rebind("MyHello", obj);
+            // 🔹 Servidor original
+            HelloImplem helloObj = new HelloImplem(5678);
+            Naming.rebind("MyHello", helloObj);
 
-            System.err.println("Server ready");
+            // 🔹 NOVO servidor (TextService)
+            TextServiceImpl textObj = new TextServiceImpl(5679);
+            Naming.rebind("TextService", textObj);
+
+            System.out.println("Servidor pronto (Hello + TextService)");
+
         } catch (Exception e) {
             System.err.println("Server exception: " + e.toString());
             e.printStackTrace();

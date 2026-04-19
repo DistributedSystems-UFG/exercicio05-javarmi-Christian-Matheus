@@ -1,0 +1,16 @@
+package example.hello;
+
+import java.rmi.server.UnicastRemoteObject;
+import java.rmi.RemoteException;
+
+public class TextServiceImpl extends UnicastRemoteObject implements TextService {
+
+    public TextServiceImpl(int port) throws RemoteException {
+        super(port);
+    }
+
+    @Override
+    public String maiusculo(String texto) throws RemoteException {
+        return texto.toUpperCase();
+    }
+}

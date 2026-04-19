@@ -16,4 +16,12 @@ public class HelloImplem extends UnicastRemoteObject implements Hello {
     public int soma (int a, int b) throws RemoteException {
         return a + b;
     }
+
+    public String inverter(String texto) throws RemoteException {
+    return new StringBuilder(texto).reverse().toString();
+    }
+
+    public int contarCaracteres(String texto) throws RemoteException {
+        return texto.length();
+    }
 }
